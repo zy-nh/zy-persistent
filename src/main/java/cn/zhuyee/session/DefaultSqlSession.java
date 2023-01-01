@@ -2,6 +2,9 @@ package cn.zhuyee.session;
 
 import cn.zhuyee.executor.Executor;
 import cn.zhuyee.pojo.Configuration;
+import cn.zhuyee.pojo.MappedStatement;
+
+import java.util.List;
 
 /**
  * <h2>SqlSession默认实现方法</h2>
@@ -18,5 +21,33 @@ public class DefaultSqlSession implements SqlSession{
   public DefaultSqlSession(Configuration configuration, Executor executor) {
     this.configuration = configuration;
     this.executor = executor;
+  }
+
+  @Override
+  public <E> List<E> selectList(String statementId, Object param) {
+    // 将查询操作委派给底层执行器
+    // query方法：执行底层JDBC （1.数据库配置信息Configuration中；2.SQL配置信息：MappedStatement中）
+    MappedStatement mappedStatement = configuration.getMappedStatementMap().get(statementId);
+    List<E> list = executor.query(configuration,mappedStatement,param);
+    return list;
+  }
+
+  @Override
+  public <T> T selectOne(String statementId, Object param) {
+    // 调用selectList()方法
+    List<Object> list = this.selectList(statementId, param);
+    if (list.size() == 1) {
+      return (T) list.get(0);
+    } else if (list.size() > 1) {
+      throw new RuntimeException("返回结果过多");
+    } else {
+      return null;
+    }
+  }
+
+  @Override
+  public void close() {
+    // 委派给底层执行器去操作
+    executor.close();
   }
 }
