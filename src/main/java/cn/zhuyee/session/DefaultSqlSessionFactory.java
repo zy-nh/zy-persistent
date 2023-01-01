@@ -1,5 +1,7 @@
 package cn.zhuyee.session;
 
+import cn.zhuyee.executor.Executor;
+import cn.zhuyee.executor.SimpleExecutor;
 import cn.zhuyee.pojo.Configuration;
 
 /**
@@ -13,5 +15,15 @@ public class DefaultSqlSessionFactory implements SqlSessionFactory{
 
   public DefaultSqlSessionFactory(Configuration configuration) {
     this.configuration = configuration;
+  }
+
+  @Override
+  public SqlSession openSession() {
+    // 1.创建执行器对象
+    Executor simpleExecutor = new SimpleExecutor();
+
+    // 2.生产 SqlSession 对象（对象会用到configuration，所以这里进行了传递）
+    DefaultSqlSession defaultSqlSession = new DefaultSqlSession(configuration, simpleExecutor);
+    return defaultSqlSession;
   }
 }
