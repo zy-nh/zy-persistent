@@ -19,7 +19,7 @@ public interface SqlSession {
    * @param <E> 集合中泛型类型待定时用E代替
    * @return 返回查询结果集合
    */
-  <E> List<E> selectList(String statementId, Object param);
+  <E> List<E> selectList(String statementId, Object param) throws Exception;
 
   /**
    * <h3>查询单个结果</h3>
@@ -29,7 +29,7 @@ public interface SqlSession {
    * @param <T> 返回值类型待定时用泛型T代替
    * @return 返回查询结果
    */
-  <T> T selectOne(String statementId, Object param);
+  <T> T selectOne(String statementId, Object param) throws Exception;
 
   /**
    * 清除资源
