@@ -49,6 +49,8 @@ public class XMLMapperBuilder {
       mappedStatement.setResultType(resultType);
       mappedStatement.setParameterType(parameterType);
       mappedStatement.setSql(sql);
+      // 设置SQL操作类型
+      mappedStatement.setSqlCommandType("select");
 
       // 把封装好的 MappedStatement对象，封装到 configuration 的map集合中
       configuration.getMappedStatementMap().put(statementId, mappedStatement);

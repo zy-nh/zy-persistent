@@ -23,6 +23,10 @@ public class MappedStatement {
    * SQL语句
    */
   private String sql;
+  /**
+   * sql命令类型：用于判断当前是什么操作的一个属性
+   */
+  private String sqlCommandType;
 
   public String getStatementId() {
     return statementId;
@@ -54,5 +58,13 @@ public class MappedStatement {
 
   public void setSql(String sql) {
     this.sql = sql;
+  }
+
+  public String getSqlCommandType() {
+    return sqlCommandType;
+  }
+
+  public void setSqlCommandType(String sqlCommandType) {
+    this.sqlCommandType = sqlCommandType;
   }
 }
