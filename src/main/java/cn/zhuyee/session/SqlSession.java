@@ -35,4 +35,13 @@ public interface SqlSession {
    * 清除资源
    */
   void close();
+
+  /**
+   * 生成代理对象
+   *
+   * @param mapperClass 要针对哪个Mapper（dao）接口来生成代理对象，这个类是未知的，用?表示
+   * @param <T> 具体代理的Dao层接口是未知的，用泛型T表示
+   * @return 返回代理对象
+   */
+  <T> T getMapper(Class<?> mapperClass);
 }
